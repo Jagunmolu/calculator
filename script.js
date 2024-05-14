@@ -1,30 +1,25 @@
-const calculator = document.querySelector('.calculator')
-const keys = calculator.querySelector('.calculator__keys')
+let display = document.getElementById('display');
+let calculated = false;
 
-keys.addEventListener('click', e => {
- if (e.target.matches('button')) {
-    const key = e.target
-    const action = key.dataset.action
+function appendInput(value) {
+    if (calculated && !isNaN(value)) {
+        clearDisplay();
+        calculated = false;
+    }
+    calculated = false;
+    display.value += value;
+}
 
-    if (
-      action === 'add' ||
-      action === 'subtract' ||
-      action === 'multiply' ||
-      action === 'divide'
-    ) {
-      console.log('operator key!')
+function clearDisplay() {
+    display.value = '';
+}
+
+function calculate() {
+    try {
+        display.value = eval(display.value);
+        calculated = true;
+    } catch (error) {
+        display.value = 'Error';
+        calculated = true;
     }
-    if (action === 'decimal') {
-      console.log('decimal key!')
-    }
-    
-    if (action === 'clear') {
-      console.log('clear key!')
-    }
-    
-    if (action === 'calculate') {
-      console.log('equal key!')
-    }
- }
-  
-})
+}
